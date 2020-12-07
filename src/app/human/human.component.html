@@ -1,0 +1,29 @@
+<app-human-form ($newedHuman)="createHuman($event)"></app-human-form>
+
+<mat-card>
+  <mat-card-title>Born State</mat-card-title>
+  <mat-card-content>
+    <app-human-list [humans]="bornHumans$|async" [photo]="bornPhoto"></app-human-list>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>Growing State</mat-card-title>
+  <mat-card-content>
+    <app-human-list [humans]="growingHumans$|async" [photo]="growingPhoto"></app-human-list>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>Dead State</mat-card-title>
+  <mat-card-content>
+    <app-human-list [humans]="deadHumans$|async" [photo]="deadPhoto"></app-human-list>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>Reborn State</mat-card-title>
+  <mat-card-content>
+    <app-human-list [humans]="rebornHumans$|async" [photo]="rebornPhoto"></app-human-list>
+  </mat-card-content>
+</mat-card>
