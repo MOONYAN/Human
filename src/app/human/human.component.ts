@@ -1,3 +1,5 @@
+import { TaskService } from './task.service';
+import { NewedHuman } from './model/newed-human.vm';
 import { HumanService } from './human.service';
 import { map, take } from 'rxjs/operators';
 import { Human } from './model/human.vm';
@@ -11,8 +13,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HumanComponent implements OnInit {
 
-  humans$: Observable<Human[]>;
-
   bornHumans$: Observable<Human[]>;
   growingHumans$: Observable<Human[]>;
   deadHumans$: Observable<Human[]>;
@@ -23,23 +23,33 @@ export class HumanComponent implements OnInit {
   deadPhoto = 'assets/dead.jpg';
   rebornPhoto = 'assets/reborn.jpg';
 
-  constructor(private humanService: HumanService) { }
+  constructor(
+    private humanService: HumanService,
+    private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.humans$ = this.humanService.getMany().pipe(
-      map(resHumanDtos => resHumanDtos.map<Human>(human => new Human(human))),
-    );
-    this.bornHumans$ = this.humans$.pipe(
+
+    const humans$ = this.taskService.getHumans();
+
+    this.bornHumans$ = humans$.pipe(
       map(humans => humans.filter(human => human.born && !human.growing))
     );
-    this.growingHumans$ = this.humans$.pipe(
+    this.growingHumans$ = humans$.pipe(
       map(humans => humans.filter(human => human.growing && !human.dead))
     );
-    this.deadHumans$ = this.humans$.pipe(
+    this.deadHumans$ = humans$.pipe(
       map(humans => humans.filter(human => human.dead && !human.reborn))
     );
-    this.rebornHumans$ = this.humans$.pipe(
+    this.rebornHumans$ = humans$.pipe(
       map(humans => humans.filter(human => human.reborn))
     );
+  }
+
+  createHuman(newedHUman: NewedHuman) {
+
+    const reqCreateHumanDto = newedHUman.toReqDto();
+    this.humanService.createOne(reqCreateHumanDto).pipe(
+      take(1)
+    ).subscribe();
   }
 }

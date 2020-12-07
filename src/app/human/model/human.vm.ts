@@ -19,7 +19,7 @@ export class Human {
     this.name = dto.name;
     this.born = dto.born;
     this.growing = dto.growing;
-    this.dead = dto.growing;
+    this.dead = dto.dead;
     this.reborn = dto.reborn;
   }
 }
