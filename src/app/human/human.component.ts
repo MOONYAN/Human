@@ -1,4 +1,5 @@
 import { TaskService } from './task.service';
+import { NewedHuman } from './model/newed-human.vm';
 import { HumanService } from './human.service';
 import { map, take } from 'rxjs/operators';
 import { Human } from './model/human.vm';
@@ -42,5 +43,13 @@ export class HumanComponent implements OnInit {
     this.rebornHumans$ = humans$.pipe(
       map(humans => humans.filter(human => human.reborn))
     );
+  }
+
+  createHuman(newedHUman: NewedHuman) {
+
+    const reqCreateHumanDto = newedHUman.toReqDto();
+    this.humanService.createOne(reqCreateHumanDto).pipe(
+      take(1)
+    ).subscribe();
   }
 }
