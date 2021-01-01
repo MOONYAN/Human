@@ -2,6 +2,8 @@
 
 An APP for demo Human queuing at 4 stage life.
 
+[DEMO](https://moonyan.github.io/Human)
+
 ## Feature
 
 - create human
